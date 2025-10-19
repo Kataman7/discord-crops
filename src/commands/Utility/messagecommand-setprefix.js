@@ -36,9 +36,9 @@ module.exports = new MessageCommand({
         }
 
         if (args[0] === config.commands.prefix) {
-            client.database.delete('prefix-' + message.guild.id);
+            await client.database.query('DELETE FROM guild_prefixes WHERE guild_id = $1', [message.guild.id]);
         } else {
-            client.database.set('prefix-' + message.guild.id, args[0]);
+            await client.database.query('INSERT INTO guild_prefixes (guild_id, prefix) VALUES ($1, $2) ON CONFLICT (guild_id) DO UPDATE SET prefix = EXCLUDED.prefix', [message.guild.id, args[0]]);
         }
 
         await message.reply({

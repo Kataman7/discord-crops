@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: discord_bot
+      POSTGRES_USER: botuser
+      POSTGRES_PASSWORD: botpass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  bot:
+    build: .
+    environment:
+      CLIENT_TOKEN: ${CLIENT_TOKEN}
+      DATABASE_URL: postgresql://botuser:botpass@postgres:5432/discord_bot
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

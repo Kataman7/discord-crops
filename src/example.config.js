@@ -1,6 +1,6 @@
 const config = {
     database: {
-        path: './database.yml' // The database path.
+        url: process.env.DATABASE_URL // PostgreSQL connection string
     },
     development: {
         enabled: false, // If true, the bot will register all application commands to a specific guild (not globally).

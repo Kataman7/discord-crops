@@ -19,8 +19,10 @@ module.exports = new MessageCommand({
      * @param {string[]} args
      */
     run: async (client, message, args) => {
+        const res = await client.database.query('SELECT prefix FROM guild_prefixes WHERE guild_id = $1', [message.guild.id]);
+        const prefix = res.rows.length > 0 ? res.rows[0].prefix : config.commands.prefix;
         await message.reply({
-            content: `${client.collection.message_commands.map((cmd) => '\`' + client.database.ensure('prefix-' + message.guild.id, config.commands.prefix) + cmd.command.name + '\`').join(', ')}`
+            content: `${client.collection.message_commands.map((cmd) => '\`' + prefix + cmd.command.name + '\`').join(', ')}`
         });
     }
 }).toJSON();
