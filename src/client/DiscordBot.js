@@ -7,6 +7,7 @@ const ComponentsHandler = require("./handler/ComponentsHandler");
 const ComponentsListener = require("./handler/ComponentsListener");
 const EventsHandler = require("./handler/EventsHandler");
 const { Pool } = require('pg');
+const GameManager = require('../game/GameManager');
 
 class DiscordBot extends Client {
     collection = {
@@ -33,6 +34,7 @@ class DiscordBot extends Client {
     components_handler = new ComponentsHandler(this);
     events_handler = new EventsHandler(this);
     database = new Pool({ connectionString: config.database.url });
+    gameManager = new GameManager(this.database);
 
     constructor() {
         super({

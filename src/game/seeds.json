@@ -1,0 +1,10 @@
+{
+  "carrot": {
+    "name": "Carotte",
+    "growthTime": 30000,
+    "buyPrice": 10,
+    "sellPrice": 15000000,
+    "requiredLevel": 1,
+    "growthStages": 5
+  }
+}
